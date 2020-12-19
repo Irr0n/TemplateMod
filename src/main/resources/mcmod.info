@@ -1,0 +1,16 @@
+[
+{
+  "modid": "template_mod",
+  "name": "Template Mod",
+  "description": "Template placeholder mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["iron"],
+  "credits": "Remain anonymous, friend.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
