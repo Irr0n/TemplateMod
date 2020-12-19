@@ -1,18 +1,9 @@
 package me.iron.templatemod.config;
 
-import me.iron.templatemod.config.Settings;
-
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 public class Config {
 
@@ -20,22 +11,26 @@ public class Config {
 
     public static Configuration config;
 
+    public <T> void saveConfigValue(String category, String key, String type, T value) {
+        switch (type) {
+            case "int": {
+                config.get(category, key, 0).set(String.valueOf(value));
+            }
+            case "double": {
+                config.get(category, key, 0.0D).set(String.valueOf(value));
+            }
+            case "String": {
+                config.get(category, key, "").set(String.valueOf(value));
+            }
+            case "boolean": {
+                config.get(category, key, false).set(String.valueOf(value));
+            }
+            default: {
+                //
+            }
+        }
 
-    Settings settings = new Settings();
-
-    public void saveConfigValue(String category, String key, String value) {
-        config.get(category, key, 0).set(String.valueOf(value));
     }
-    public void saveConfigValue(String category, String key, int value) {
-        config.get(category, key, 0).set(value);
-    }
-    public void saveConfigValue(String category, String key, double value) {
-        config.get(category, key, 0).set(value);
-    }
-    public void saveConfigValue(String category, String key, boolean value) {
-        config.get(category, key, 0).set(value);
-    }
-
 
     public void saveConfigSettingsFields() {
 
@@ -43,37 +38,35 @@ public class Config {
 
         Field[] mainFields = this.settingsClass.getDeclaredFields();
 
-        for (int i = 0; i < mainFields.length; i++) {
+        for (Field mainField : mainFields) {
             String value = "";
 
             try {
-                value = String.valueOf(mainFields[i].get(this.settingsClass));
-            } catch (IllegalAccessException e) {
+                value = String.valueOf(mainField.get(this.settingsClass));
+            } catch (IllegalAccessException ignored) {
 
             }
             //use "general" for no category
-            saveConfigValue("general", mainFields[i].getName(), value);
+            saveConfigValue("general", mainField.getName(), mainField.getType().getSimpleName(), value);
         }
 
-        for (int i = 0; i < classes.length; i++) {
-            Field[] subFields = classes[i].getDeclaredFields();
-            for (int j = 0; j < subFields.length; j++) {
+        for (Class aClass : classes) {
+            Field[] subFields = aClass.getDeclaredFields();
+            for (Field subField : subFields) {
                 String value = "";
                 try {
-                    value = String.valueOf(subFields[i].get(classes[i]));
-                } catch (IllegalAccessException e) {
+                    value = String.valueOf(subField.get(aClass));
+                } catch (IllegalAccessException ignored) {
 
                 }
-                saveConfigValue(classes[i].getSimpleName(), subFields[i].getName(), value));
+                saveConfigValue(aClass.getSimpleName(), subField.getName(), subField.getType().getSimpleName(), value);
             }
         }
 
     }
 
-
     public static void initConfig(File file) {
         (config = new Configuration(file, true)).load();
-        Settings.booleanValue = config.get("general", "booleanValue", true).getBoolean();
         config.save();
     }
 

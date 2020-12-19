@@ -8,11 +8,16 @@ public class Settings {
     - string
     - int
     - double
+
+    Only 1 child class permitted
      */
+
 
     public static boolean booleanValue = true;
 
     public static int intValue = 0;
+
+    public static double doubleValue = 0.2D;
 
     public static String stringValue = "text";
 
@@ -33,6 +38,8 @@ public class Settings {
         public static int intValue3 = 0;
 
         public static boolean booleanValue3 = false;
+
+        public static String stringValue2 = "text2";
 
     }
 

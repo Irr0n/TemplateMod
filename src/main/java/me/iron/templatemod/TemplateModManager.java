@@ -3,8 +3,6 @@ package me.iron.templatemod;
 import me.iron.templatemod.commands.TemplateModCommand;
 import me.iron.templatemod.config.Config;
 
-
-import me.iron.templatemod.config.Settings;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -35,7 +33,6 @@ public class TemplateModManager {
         MinecraftForge.EVENT_BUS.register(this);
 
         loadCommands();
-
 
     }
 

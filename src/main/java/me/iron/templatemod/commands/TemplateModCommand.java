@@ -50,18 +50,12 @@ public class TemplateModCommand extends CommandBase {
     public void processCommand(ICommandSender sender, String[] args) throws CommandException {
 
         if (args.length == 0) {
-            /*
-            ArrayList<String> fieldAttributes = config.updateConfigReflection();
-            for (int i = 0; i < fieldAttributes.size(); i++) {
-                Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText(fieldAttributes.get(i)));
-            }
 
-             */
         } else {
-            Settings.booleanValue = !Settings.booleanValue;
+
         }
+
         Config.saveConfig();
-        config.updateConfig2();
 
     }
 
