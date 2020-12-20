@@ -28,19 +28,19 @@ public class Settings {
 
     public static class SettingsCategory {
 
-        public static int intValue2 = 0;
+        public static int category1IntValue = 0;
 
-        public static boolean booleanValue2 = false;
+        public static boolean category1BooleanValue = false;
 
     }
 
     public static class SettingsCategory2 {
 
-        public static int intValue3 = 0;
+        public static int category2IntValue = 0;
 
-        public static boolean booleanValue3 = false;
+        public static boolean category2BooleanValue = false;
 
-        public static String stringValue2 = "text2";
+        public static String category2StringValue = "text2";
 
     }
 
