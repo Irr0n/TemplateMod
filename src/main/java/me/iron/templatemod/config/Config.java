@@ -97,40 +97,42 @@ public class Config {
         Field[] mainFields = this.settingsClass.getDeclaredFields();
 
         for (int i = 0; i < mainFields.length; i++) {
-            String value = "";
 
-            System.out.println("field " + i);
             String type = mainFields[i].getGenericType().getTypeName();
             String name = mainFields[i].getName();
-            System.out.println("field name " + name);
-            System.out.println("field type " + type);
+
+            //4 value return types
             for (int j = 0; j < 4; j++) {
+
+                //use "general" for no category
                 if (initConfigValue("general", name, type).get(j) != null) {
-                    System.out.println("-start-");
-                    System.out.println("type input " + type);
-                    System.out.println("name input " + name);
-                    System.out.println("config value " + initConfigValue("general", name, type).get(j));
-                    System.out.println("-end-");
+
                     try {
-                        System.out.println("prior int value " + Settings.intValue);
-                        System.out.println("setting value");
+                        //use "general" for no category
                         mainFields[i].set(settingsClass, initConfigValue("general", name, type).get(j));
-                        System.out.println("Int Value (should only change when after integer is scanned) " + Settings.intValue);
-                    } catch (IllegalAccessException ignore) {
-
-                    }
-
+                    } catch (IllegalAccessException ignore) {}
                 }
             }
-
-            //use "general" for no category
-            //mainField.set(settingsClass, ());
         }
 
         for (Class aClass : classes) {
             Field[] subFields = aClass.getDeclaredFields();
-            for (Field subField : subFields) {
+            for (int i = 0; i < subFields.length; i++) {
+                String fieldType = subFields[i].getGenericType().getTypeName();
+                String fieldName = subFields[i].getName();
+                String className = aClass.getSimpleName();
 
+                //4 value return types
+                for (int j = 0; j < 4; j++) {
+
+                    if (initConfigValue(className, fieldName, fieldType).get(j) != null) {
+
+                        try {
+                            subFields[i].set(aClass, initConfigValue(className, fieldName, fieldType).get(j));
+                        } catch (IllegalAccessException ignore) {}
+
+                    }
+                }
             }
         }
 
