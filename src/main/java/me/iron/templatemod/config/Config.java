@@ -1,9 +1,11 @@
 package me.iron.templatemod.config;
 
+import com.ibm.icu.text.ArabicShaping;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class Config {
 
@@ -65,8 +67,78 @@ public class Config {
 
     }
 
+
+    public ArrayList initConfigValue(String category, String key, String type) {
+        ArrayList valueArray = new ArrayList<Object>();
+
+        valueArray.add(null);
+        valueArray.add(null);
+        valueArray.add(null);
+        valueArray.add(null);
+
+        if (type == "int") {
+            valueArray.set(0, config.get(category, key, 0).getInt());
+        } else if (type == "double") {
+            valueArray.set(1, config.get(category, key, 0.0D).getDouble());
+        } else if (type == "String") {
+            valueArray.set(1, config.get(category, key, 0.0D).getDouble());
+        } else if (type == "boolean") {
+            valueArray.set(3, config.get(category, key, false).getBoolean());
+        }
+
+        return valueArray;
+
+    }
+
+    public void initConfigSettingsFields() {
+
+        Class[] classes = this.settingsClass.getClasses();
+
+        Field[] mainFields = this.settingsClass.getDeclaredFields();
+
+        for (int i = 0; i < mainFields.length; i++) {
+            String value = "";
+
+            System.out.println("field " + i);
+            String type = mainFields[i].getGenericType().getTypeName();
+            String name = mainFields[i].getName();
+            System.out.println("field name " + name);
+            System.out.println("field type " + type);
+            for (int j = 0; j < 4; j++) {
+                if (initConfigValue("general", name, type).get(j) != null) {
+                    System.out.println("-start-");
+                    System.out.println("type input " + type);
+                    System.out.println("name input " + name);
+                    System.out.println("config value " + initConfigValue("general", name, type).get(j));
+                    System.out.println("-end-");
+                    try {
+                        System.out.println("prior int value " + Settings.intValue);
+                        System.out.println("setting value");
+                        mainFields[i].set(settingsClass, initConfigValue("general", name, type).get(j));
+                        System.out.println("Int Value (should only change when after integer is scanned) " + Settings.intValue);
+                    } catch (IllegalAccessException ignore) {
+
+                    }
+
+                }
+            }
+
+            //use "general" for no category
+            //mainField.set(settingsClass, ());
+        }
+
+        for (Class aClass : classes) {
+            Field[] subFields = aClass.getDeclaredFields();
+            for (Field subField : subFields) {
+
+            }
+        }
+
+    }
+
     public static void initConfig(File file) {
         (config = new Configuration(file, true)).load();
+        new Config().initConfigSettingsFields();
         config.save();
     }
 

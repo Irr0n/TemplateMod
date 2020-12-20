@@ -9,7 +9,8 @@ public class Settings {
     - int
     - double
 
-    Only 1 child class permitted
+    Only 1 child class to be permitted
+    this will be used as a category
      */
 
 

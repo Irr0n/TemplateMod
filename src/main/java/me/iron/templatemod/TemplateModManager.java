@@ -9,8 +9,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-import java.io.File;
-
 @Mod(modid = TemplateModManager.MOD_ID, version = TemplateModManager.VERSION, name = TemplateModManager.MOD_NAME, acceptedMinecraftVersions = "[1.8.9]", clientSideOnly = true)
 public class TemplateModManager {
 
@@ -20,7 +18,6 @@ public class TemplateModManager {
 
     Config config = new Config();
 
-    File file;
 
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
