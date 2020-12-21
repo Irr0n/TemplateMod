@@ -1,9 +1,11 @@
 package me.iron.templatemod.commands;
 
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 
 import me.iron.templatemod.Gui.GuiMain;
+import me.iron.templatemod.TemplateMod;
 import me.iron.templatemod.config.Config;
 
 
@@ -57,7 +59,7 @@ public class TemplateModCommand extends CommandBase {
             MinecraftForge.EVENT_BUS.register(this);
 
         } else {
-            System.out.println(Settings.isEnabled);
+            new TemplateMod().setDisplayItem(String.valueOf(args));
         }
 
         Config.saveConfig();

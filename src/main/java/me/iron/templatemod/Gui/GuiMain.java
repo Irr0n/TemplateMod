@@ -3,6 +3,7 @@ package me.iron.templatemod.Gui;
 import java.io.IOException;
 
 import me.iron.templatemod.Gui.items.GuiCommons;
+import me.iron.templatemod.Hud.HudRenderer;
 import me.iron.templatemod.TemplateMod;
 import me.iron.templatemod.config.Config;
 import me.iron.templatemod.config.Settings;
@@ -32,7 +33,9 @@ public class GuiMain extends GuiScreen{
 
     private GuiSlider sliderScale;
 
+    @Override
     public void initGui() {
+        super.initGui();
 
         //buttons spaced by 24
 
@@ -110,7 +113,7 @@ public class GuiMain extends GuiScreen{
 
         GL11.glPopMatrix();
 
-        TemplateMod.renderDisplayItem();
+        HudRenderer.renderDisplayItem();
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
@@ -135,6 +138,8 @@ public class GuiMain extends GuiScreen{
                 Settings.displayItem.scale = (float)this.sliderScale.getValue();
                 break;
         }
+
+        Config.saveConfig();
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
@@ -184,6 +189,8 @@ public class GuiMain extends GuiScreen{
             GL11.glPopMatrix();
 
             updatePosition();
+
+            Settings.displayItem.scale = (float)this.sliderScale.getValue();
 
             this.prevMouseX = mouseX;
             this.prevMouseY = mouseY;
