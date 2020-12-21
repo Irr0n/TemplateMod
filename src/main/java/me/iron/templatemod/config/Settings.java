@@ -13,34 +13,28 @@ public class Settings {
     this will be used as a category
      */
 
+    public static boolean isEnabled = true;
 
-    public static boolean booleanValue = true;
 
-    public static int intValue = 0;
+    //make a DisplayItem class? --conflict with config processes
+    //--conflict with config processes
+    /*
+    add second class check to config
+    and iterate through second subclass methods with category title as primary subsclass
+     */
+    public static class displayItem {
 
-    public static double doubleValue = 0.2D;
+        public static double scale = 1.0D;
 
-    public static String stringValue = "text";
+        public static int posX = 0;
 
-    public static float floatValue = 0.1F;
+        public static int posY = 0;
 
-    public static char charValue = 'a';
+        public static boolean showBackground = false;
 
-    public static class SettingsCategory {
-
-        public static int category1IntValue = 0;
-
-        public static boolean category1BooleanValue = false;
-
-    }
-
-    public static class SettingsCategory2 {
-
-        public static int category2IntValue = 0;
-
-        public static boolean category2BooleanValue = false;
-
-        public static String category2StringValue = "text2";
+        public static double red = 1.0D;
+        public static double green = 1.0D;
+        public static double blue = 1.0D;
 
     }
 

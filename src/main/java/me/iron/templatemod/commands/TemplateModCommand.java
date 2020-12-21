@@ -2,8 +2,8 @@ package me.iron.templatemod.commands;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
+import me.iron.templatemod.Gui.GuiMain;
 import me.iron.templatemod.config.Config;
 
 
@@ -12,7 +12,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.util.ChatComponentText;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class TemplateModCommand extends CommandBase {
 
@@ -52,12 +54,20 @@ public class TemplateModCommand extends CommandBase {
 
         if (args.length == 0) {
 
-        } else {
+            MinecraftForge.EVENT_BUS.register(this);
 
+        } else {
+            System.out.println(Settings.isEnabled);
         }
 
         Config.saveConfig();
 
+    }
+
+    @SubscribeEvent
+    public void onClientTick(TickEvent.ClientTickEvent event) {
+        Minecraft.getMinecraft().displayGuiScreen(new GuiMain());
+        MinecraftForge.EVENT_BUS.unregister(this);
     }
 
 }
